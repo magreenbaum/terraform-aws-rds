@@ -215,6 +215,7 @@ resource "aws_iam_role_policy_attachment" "enhanced_monitoring" {
 # In order to use master password secrets management without a rotation, the following workaround can be used:
 # `manage_master_user_password_rotation` must be set to true first and applied followed by setting it to false and another apply.
 # Note: when setting `manage_master_user_password_rotation` to true, a schedule must also be set using `master_user_password_rotation_schedule_expression` or `master_user_password_rotation_automatically_after_days`.
+# To prevent password from being immediately rotated when implementing this workaround, set `master_user_password_rotate_immediately` to false.
 # See: https://github.com/hashicorp/terraform-provider-aws/issues/37779
 resource "aws_secretsmanager_secret_rotation" "this" {
   count = var.create && var.manage_master_user_password && var.manage_master_user_password_rotation ? 1 : 0
